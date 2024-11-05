@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Paste Ext Instaling",
+  "version": "1.0",
+  "description": "Allows pasting text into input fields.",
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["https://instaling.pl/ling2/html_app/app.php?child_id=*"],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "16": "instaling-logo.png",
+    "48": "instaling-logo.png",
+    "128": "instaling-logo.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "ItsAlex@ItsAlex"
+    }
+  }
+}
