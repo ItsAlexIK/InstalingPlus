@@ -1,6 +1,6 @@
 # Instaling+ 1.1
 
-To rozszerzenie umożliwia zapis i kopiowanie słówek z strony: [https://instaling.pl/](https://instaling.pl/)
+To rozszerzenie umożliwia zapis, pobranie i kopiowanie słówek z strony: [https://instaling.pl/](https://instaling.pl/)
 Działa w trybie codziennej sesji
 
 ![Przykładowy zrzut ekranu](https://i.ibb.co/1nHwjVK/image.png)
