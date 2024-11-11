@@ -249,6 +249,60 @@ document.addEventListener("paste", function (e) {
   }
 });
 
+function getParameterByName(name, url = window.location.href) {
+  name = name.replace(/[\[\]]/g, "\\$&");
+  const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+  const results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return "";
+  return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function addFetchWordsButton() {
+  const fetchWordsButton = createStyledButton(
+    "Pobierz słówka",
+    "#28a745",
+    () => {
+      const student_id = getParameterByName("child_id");
+
+      if (student_id) {
+        fetch(
+          `https://instaling.pl/learning/repeat_words_new.php?student_id=${student_id}&menu=4`
+        )
+          .then((response) => response.text())
+          .then((data) => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(data, "text/html");
+
+            const rows = doc.querySelectorAll(".table_tests tbody tr");
+
+            rows.forEach((row) => {
+              const wordCell = row.querySelector("td");
+              const translationCell = row.querySelector("td:nth-child(2)");
+
+              if (wordCell && translationCell) {
+                const word = wordCell.textContent.trim();
+                const translation = translationCell.textContent.trim();
+                saveTranslation(word, translation);
+              }
+            });
+          })
+          .catch((error) => {
+            console.error("Błąd:", error);
+          });
+      } else {
+        console.error("Nie znaleziono student_id (child_id) w URL.");
+      }
+    }
+  );
+
+  const translationsList = document.getElementById("translationsList");
+  if (translationsList) {
+    translationsList.appendChild(fetchWordsButton);
+  }
+}
+
 createCopyrightBox();
 setupCheckButtonListener();
 showTranslations();
+addFetchWordsButton();
