@@ -9,7 +9,7 @@ Działa w trybie codziennej sesji
 
 1. **Pobierz pliki**: Skopiuj wszystkie pliki z tego repozytorium na swój komputer.
 
-2. **Otwórz Chrome**: Uruchom przeglądarkę Google Chrome.
+2. **Otwórz Chrome**: Uruchom przeglądarkę.
 
 3. **Wejdź w Ustawienia rozszerzeń**:
    - Kliknij ikonę menu (trzy kropki) w prawym górnym rogu.
@@ -31,7 +31,7 @@ Działa w trybie codziennej sesji
 
 ## Wymagania
 
-- Google Chrome.
+- Przeglądarka.
 
 ## Licencja
 
