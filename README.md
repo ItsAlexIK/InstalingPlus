@@ -28,6 +28,7 @@ Działa w trybie codziennej sesji
 - Zapisuje tłumaczenia.
 - Wyświetla tłumaczenia.
 - Wyszukiwanie słówek. 
+- Kopiowanie i wklejanie słówek.
 
 ## Wymagania
 
