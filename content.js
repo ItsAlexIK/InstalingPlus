@@ -93,27 +93,37 @@ function showTranslations(filter = "") {
     .sort((a, b) =>
       a.word.localeCompare(b.word, "pl", { sensitivity: "base" })
     );
-
   filteredTranslations.forEach((translation) => {
     const li = document.createElement("li");
     li.style.marginBottom = "15px";
+    li.style.padding = "5px";
+    li.style.borderBottom = "1px solid #444";
     li.style.display = "flex";
     li.style.justifyContent = "space-between";
     li.style.alignItems = "center";
-    li.style.padding = "5px";
-    li.style.borderBottom = "1px solid #444";
 
     const textContainer = document.createElement("span");
     textContainer.textContent = `${translation.word} - ${translation.translation}`;
     li.appendChild(textContainer);
 
+    const buttonContainer = document.createElement("div");
+
     const copyButton = createStyledButton("📋", "#282c34", () => {
       navigator.clipboard.writeText(translation.word).then(() => {
-        updateCopyButton(copyButton, "✅");
+        updateButton(copyButton, "✅");
       });
     });
 
-    li.appendChild(copyButton);
+    const pasteButton = createStyledButton("📥", "#282c34", () => {
+      pasteTextIntoActiveField(translation.word);
+      updateButton(pasteButton, "✅");
+    });
+
+    buttonContainer.appendChild(copyButton);
+    buttonContainer.appendChild(pasteButton);
+
+    li.appendChild(buttonContainer);
+
     list.appendChild(li);
   });
 
@@ -172,6 +182,10 @@ function createStyledButton(text, bgColor, onClick) {
   button.style.cursor = "pointer";
   button.style.transition = "background-color 0.3s, transform 0.2s";
   button.style.marginLeft = "10px";
+  button.style.marginRight = "10px";
+  button.style.fontWeight = "bold";
+  button.style.display = "inline-block";
+
   button.style.fontSize = "16px";
   button.style.fontFamily = "Arial, sans-serif";
   button.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.2)";
@@ -186,17 +200,21 @@ function createStyledButton(text, bgColor, onClick) {
     button.style.transform = "scale(1)";
   });
 
-  button.addEventListener("click", onClick);
+  button.addEventListener("click", () => {
+    onClick();
+    updateButton(button, message);
+  });
 
   return button;
 }
 
-function updateCopyButton(button, message) {
+function updateButton(button, message) {
   const originalText = button.textContent;
   button.textContent = message;
 
   setTimeout(() => {
     button.textContent = originalText;
+
     const searchInput = document.querySelector("#translationsList input");
     if (searchInput) {
       searchInput.value = "";
@@ -204,12 +222,6 @@ function updateCopyButton(button, message) {
     }
   }, 2000);
 }
-
-const copyButton = createStyledButton("📋", "#282c34", () => {
-  navigator.clipboard.writeText(translation.word).then(() => {
-    updateCopyButton(copyButton, "✅");
-  });
-});
 
 function setupCheckButtonListener() {
   const nextButton = document.getElementById("next_word");
@@ -299,6 +311,15 @@ function addFetchWordsButton() {
   const translationsList = document.getElementById("translationsList");
   if (translationsList) {
     translationsList.appendChild(fetchWordsButton);
+  }
+}
+
+function pasteTextIntoActiveField(text) {
+  const inputField = document.getElementById("answer");
+  if (inputField) {
+    inputField.value = text;
+  } else {
+    console.error("Pole wejściowe o id 'answer' nie zostało znalezione.");
   }
 }
 
